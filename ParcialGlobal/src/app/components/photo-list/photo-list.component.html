@@ -1,0 +1,48 @@
+<div class="container">
+  <h2>Gestión de Fotos</h2>
+  
+  <table class="photo-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Título</th>
+        <th>Imagen</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let photo of photos">
+        <td>{{ photo.id }}</td>
+        <td>{{ photo.title }}</td>
+        <td>
+          <img [src]="photo.thumbnailUrl" [alt]="photo.title" width="50">
+        </td>
+        <td class="actions">
+          <button class="btn-edit" (click)="openEditModal(photo)">Editar</button>
+          <button class="btn-delete" (click)="deletePhoto(photo.id)">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td>Nuevo</td>
+        <td>
+          <input type="text" [(ngModel)]="newPhoto.title" placeholder="Título" class="form-input">
+        </td>
+        <td>
+          <input type="text" [(ngModel)]="newPhoto.url" placeholder="URL" class="form-input">
+        </td>
+        <td>
+          <button class="btn-add" (click)="createPhoto()">Agregar</button>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+
+  <app-photo-modal
+    *ngIf="isModalOpen"
+    [photo]="selectedPhoto"
+    (close)="closeModal()"
+    (save)="updatePhoto($event)">
+  </app-photo-modal>
+</div>
